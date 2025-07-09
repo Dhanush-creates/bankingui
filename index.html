@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Application</title>
+    </head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Banking Application</h1>
+            <p>Secure Banking for Your Financial Needs</p>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="loginScreen" class="content">
+            <div class="login-form">
+                <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">🔐 Login to Your Account</h2>
+                
+                <div id="loginAlert" class="alert hidden"></div>
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+                
+                <button class="btn btn-primary" onclick="handleLogin()" style="width: 100%;">Login</button>
+                
+                <div class="demo-accounts">
+                    <h4>Demo Accounts:</h4>
+                    <p>user1 / 1234 (₹1000)</p>
+                    <p>user2 / 5678 (₹1555)</p>
+                    <p>user3 / 1233 (₹2000)</p>
+                    <p>user4 / password (₹5000)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboardScreen" class="content hidden">
+            <div class="welcome-message">
+                <h2>Welcome back, <span id="welcomeUser"></span>!</h2>
+                <p>Choose what service you want:</p>
+            </div>
+
+            <div id="dashboardAlert" class="alert hidden"></div>
+
+            <div class="dashboard">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Balance Card -->
+                    <div class="balance-card">
+                        <div class="balance-amount">₹<span id="balanceAmount">0</span></div>
+                        <div class="balance-label">Account Balance</div>
+                    </div>
+
+                    <!-- Account Details -->
+                    <div class="account-details">
+                        <h3>Account Information</h3>
+                        <div class="info-row">
+                            <span>Account Holder:</span>
+                            <span id="accountHolder"></span>
+                        </div>
+                        <div class="info-row">
+                            <span>Username:</span>
+                            <span id="accountUsername"></span>
+                        </div>
+                        <div class="info-row">
+                            <span>Account Number:</span>
+                            <span id="accountNumber"></span>
+                        </div>
+                        <div class="info-row">
+                            <span>Account Type:</span>
+                            <span>Savings Account</span>
+                        </div>
+                        <div class="info-row">
+                            <span>Status:</span>
+                            <span style="color: #28a745;">Active</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-danger" onclick="handleLogout()" style="width: 100%;">3. Logout</button>
+                </div>
+
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="menu-buttons">
+                        <div class="menu-button" onclick="handleCheckBalance()">
+                            <h3>1. Check Balance</h3>
+                            <p>View your current account balance</p>
+                        </div>
+                        
+                        <div class="menu-button" onclick="showTransferForm()">
+                            <h3>2. Transfer Money</h3>
+                            <p>Send money to another account</p>
+                        </div>
+                        
+                        <div class="menu-button" onclick="showTransactionHistory()">
+                            <h3>Transaction History</h3>
+                            <p>View your transaction history</p>
+                        </div>
+                        
+                        <div class="menu-button" onclick="showStatement()">
+                            <h3>Bank Statement</h3>
+                            <p>View your bank statement</p>
+                        </div>
+                    </div>
+
+                    <!-- Transfer Form -->
+                    <div id="transferForm" class="transfer-form hidden">
+                        <h3>💸 Transfer Money</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="receiver">Receiver Username</label>
+                                <input type="text" id="receiver" placeholder="Enter receiver username">
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Amount (₹)</label>
+                                <input type="number" id="amount" placeholder="Enter amount to transfer">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="handleTransferMoney()">Transfer</button>
+                        <button class="btn btn-secondary" onclick="hideTransferForm()">Cancel</button>
+                    </div>
+
+                    <!-- Transaction History -->
+                    <div id="transactionHistory" class="content-section hidden">
+                        <h3>📋 Transaction History</h3>
+                        <div id="transactionsList">
+                            <p style="color: #666; text-align: center; padding: 2rem;">No transactions yet</p>
+                        </div>
+                        <button class="btn btn-secondary" onclick="hideTransactionHistory()">Close</button>
+                    </div>
+
+                    <!-- Bank Statement -->
+                    <div id="bankStatement" class="content-section hidden">
+                        <h3>📊 Bank Statement</h3>
+                        <div class="account-details">
+                            <div class="info-row">
+                                <span>Account Holder:</span>
+                                <span id="statementHolder"></span>
+                            </div>
+                            <div class="info-row">
+                                <span>Statement Period:</span>
+                                <span id="statementPeriod"></span>
+                            </div>
+                            <div class="info-row">
+                                <span>Current Balance:</span>
+                                <span style="color: #28a745;">₹<span id="statementBalance">0</span></span>
+                            </div>
+                        </div>
+                        
+                        <table class="statement-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statementBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: #666; padding: 2rem;">No transactions to display</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-secondary" onclick="hideStatement()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
